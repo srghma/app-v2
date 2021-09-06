@@ -16,11 +16,14 @@ export function VoteContractProvider({ children }) {
   const { account, library } = useWeb3React();
   const { setPopUp } = usePopup();
   const { snowconeBalance } = useContracts()
+
   const [loading, setLoading] = useState(false);
 
   const { getProposalList } = useAPIContext();
   const { data: { ProposalList: { proposals = [], proposalCount = 0, quorumVotes = 0 } = {} } = {} } = getProposalList();
   const governanceV2Contract = useMemo(() => library ? new ethers.Contract(CONTRACTS.VOTE.GOVERNANCE_V2, GOVERNANCE_ABI, library.getSigner()) : null, [library])
+
+  const minimumForProposal = 100000
 
   const activeProposals = useMemo(() => {
     const activeArray = proposals.filter((proposal) => proposal.state === 'Active')
@@ -100,10 +103,7 @@ export function VoteContractProvider({ children }) {
   const createProposal = useCallback(async ({
     title,
     metadata,
-    votingPeriod,
-    target,
-    value,
-    data
+    votingPeriod
   }) => {
     if (!account) {
       setPopUp({
@@ -113,7 +113,7 @@ export function VoteContractProvider({ children }) {
       return;
     }
 
-    if (snowconeBalance < 100000) {
+    if (snowconeBalance < minimumForProposal) {
       setPopUp({
         title: 'Insufficient Balance',
         text: `You do not have enough xSnob to create a proposal`
@@ -123,35 +123,38 @@ export function VoteContractProvider({ children }) {
 
     setLoading(true)
     try {
-      const votePropose = await governanceV2Contract.propose(
+      // const metadataURL = Upload metadata to IPFS
+      const propose = await governanceV2Contract.propose(
         title,
         metadata,
         votingPeriod,
-        target,
-        value,
-        data
-      )
-      const transactionPropose = await votePropose.wait(1)
+        account,
+        0,
+        0x00
+      );
 
-      if (transactionPropose.status) {
+      const proposeTx = await propose.wait(1);
+
+      if (proposeTx.status) {
         setPopUp({
           title: 'Success',
-          text: `You voted on this proposal successfully`
+          text: `Your proposal was submitted successfully`
         })
       }
     } catch (error) {
       setPopUp({
         title: 'Error',
-        text: `You don\'t have enough xSnob to vote`
+        text: `An error occured while trying to submit your proposal`
       })
     }
     setLoading(false)
-  }, [account, snowconeBalance, governanceV2Contract, setPopUp])
+  }, [account, snowconeBalance, minimumForProposal, governanceV2Contract, setPopUp])
 
   return (
     <ContractContext.Provider
       value={{
         loading,
+        minimumForProposal,
         proposals,
         activeProposals,
         proposalCount,
@@ -174,6 +177,7 @@ export function useVoteContract() {
 
   const {
     loading,
+    minimumForProposal,
     proposals,
     activeProposals,
     proposalCount,
@@ -185,6 +189,7 @@ export function useVoteContract() {
 
   return {
     loading,
+    minimumForProposal,
     proposals,
     activeProposals,
     proposalCount,

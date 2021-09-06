@@ -13,7 +13,9 @@ import { STRING_VALID, VOTE_PERIOD_VALID } from 'utils/constants/validations'
 
 const schema = yup.object().shape({
   title: STRING_VALID,
-  data: STRING_VALID,
+  description: STRING_VALID,
+  discussURL: STRING_VALID,
+  documentURL: STRING_VALID,
   votingPeriod: VOTE_PERIOD_VALID
 });
 
@@ -33,7 +35,8 @@ const NewProposal = () => {
   });
 
   const onSubmit = async (data) => {
-    createProposal(data)
+    metadata = {"description": data.description, "discussion": data.discussURL, "document": data.documentURL};
+    await createProposal(data.title, metadata, data.votingPeriod);
   }
 
   return (

@@ -18,6 +18,9 @@ const useStyles = makeStyles((theme) => ({
   header: {
     display: 'flex',
     justifyContent: 'space-between',
+  },
+  required: {
+    color: 'red'
   }
 }))
 
@@ -46,7 +49,12 @@ const ProposalSubForm = ({
               min: 1,
               max: 30
             }}
-            label={<>Voting Period in days <CircleHelpIcon /> </>}
+            label={
+            <>Voting Period in days
+            <Typography variant='subtitle' className={classes.required}> * </Typography>
+            <CircleHelpIcon /> 
+            </>
+            }
             placeholder='Period of days to vote'
             error={errors.votingPeriod?.message}
             control={control}
@@ -56,9 +64,9 @@ const ProposalSubForm = ({
         <Grid item xs={12}>
           <Controller
             as={<SnowTextField />}
-            name='metadata'
-            label={<>Discuss URL <CircleHelpIcon /> </>}
-            placeholder='https://discord.gg/tDuuf12'
+            name='discussURL'
+            label={<>Discussion URL <CircleHelpIcon /> </>}
+            placeholder='https://discord.com/channels/...'
             control={control}
             defaultValue={''}
           />
@@ -68,7 +76,7 @@ const ProposalSubForm = ({
             as={<SnowTextField />}
             name='documentURL'
             label={<>Pros - Cons Document URL <CircleHelpIcon /> </>}
-            placeholder='https://docs.google.com/tDuu'
+            placeholder='https://docs.google.com/...'
             control={control}
             defaultValue={''}
           />
