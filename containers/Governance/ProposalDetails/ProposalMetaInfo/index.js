@@ -73,7 +73,7 @@ const ProposalMetaInfo = ({
           <div className={classes.timeContainer}>
             <ClockIcon />
             <Typography className={classes.time}>
-            {proposal.state === 'Active' ? "Start of " : "Started "} voting at<br />
+              Started voting at<br />
               <span>
                 {getEnglishDateWithTime(proposal.startDate)}
               </span>

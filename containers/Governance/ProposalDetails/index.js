@@ -9,7 +9,7 @@ import { useVoteContract } from 'contexts/vote-context'
 import LinkButton from 'components/UI/Buttons/LinkButton'
 import PageHeader from 'parts/PageHeader'
 import XSnowballCard from 'parts/Vote/XSnowballCard'
-import ProposalHistory from 'parts/Vote/ProposalVoteHistory'
+import VoteHistory from 'parts/Vote/ProposalVoteHistory'
 import ProposalDetailHeader from './ProposalDetailHeader'
 import ProposalAction from './ProposalAction'
 import ProposalDetailInfo from './ProposalDetailInfo'
@@ -78,7 +78,7 @@ const ProposalDetails = () => {
               <XSnowballCard />
             </Grid>
             <Grid item xs={12}>
-              <ProposalHistory
+              <VoteHistory
                 proposal={proposal}
                 proposalReceipt={proposalReceipt}
               />
