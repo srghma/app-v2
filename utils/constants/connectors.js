@@ -19,12 +19,12 @@ const AVALANCHE_MAINNET_PARAMS = {
 
 //add fallback
 var providers = [
-  // {
-  //   provider: new ethers.providers.StaticJsonRpcProvider(AVALANCHE_MAINNET_PARAMS.rpcUrls[0]),
-  //   priority: 2,
-  //   weight: 1,
-  //   stallTimeout: 500
-  // },
+  {
+    provider: new ethers.providers.StaticJsonRpcProvider(AVALANCHE_MAINNET_PARAMS.rpcUrls[0]),
+    priority: 2,
+    weight: 1,
+    stallTimeout: 500
+  },
   {
     provider: new ethers.providers.StaticJsonRpcProvider(`${PRIVATENODE}/ext/bc/C/rpc`),
     priority: 1,
