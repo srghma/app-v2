@@ -69,12 +69,14 @@ const CompoundAndEarn = () => {
       let sortedData = [...poolsInfo]
       sortedData = sortedData.sort((a, b) => b.gaugeInfo.fullYearlyAPY - a.gaugeInfo.fullYearlyAPY);
       setLastSnowballInfo(sortedData);
+      setFirstSnowballInfo(sortedData);
       return
     }
 
     if(!sortedUserPools){
       const sortedData = sortingByUserPool(type, userPools);
       setLastSnowballInfo(sortedData);
+      setFirstSnowballInfo(sortedData);
       setSortedUserPools(true);
       setLoadedDeprecated(false);
     }
