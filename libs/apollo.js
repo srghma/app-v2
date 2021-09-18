@@ -15,6 +15,7 @@ function createApolloClient() {
   });
 }
 
+// initialState is for SSR
 export function initializeApollo(initialState = null) {
   const _apolloClient = apolloClient ?? createApolloClient();
 
@@ -27,7 +28,7 @@ export function initializeApollo(initialState = null) {
     // combined with the existing cached data
     _apolloClient.cache.restore({ ...existingCache, ...initialState });
   }
-  // For SSG and SSR always create a new Apollo Client
+  // For SSG and SSR always create a new Apollo Client // TODO WHY?
   if (typeof window === 'undefined') return _apolloClient;
   // Create the Apollo Client once in the client
   if (!apolloClient) apolloClient = _apolloClient;
@@ -35,6 +36,6 @@ export function initializeApollo(initialState = null) {
 }
 
 export function useApollo(initialState) {
-  const store = useMemo(() => initializeApollo(initialState), [initialState]);
+  const store = useMemo(() => initializeApollo(initialState), [initialState]); // Does forgets prev memoized values IF there is not enough memory
   return store;
 }

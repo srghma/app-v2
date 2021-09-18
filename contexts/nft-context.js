@@ -30,7 +30,7 @@ export function NFTContractProvider({ children }) {
   const governanceContract = useMemo(() => library ? new ethers.Contract(CONTRACTS.GOVERNANCE, GOVERNANCE_ABI, library.getSigner()) : null, [library])
 
   const getNFTData = useCallback(async () => {
-    let claimNFTs = []
+    let claimNFTs = [] // nothing wrong here
     let shopNFTs = []
     let purchasedNFTs = []
 
@@ -40,7 +40,7 @@ export function NFTContractProvider({ children }) {
 
       if (account) {
         const { abi, type } = getNFTABI(address);
-        const nftContract = new ethers.Contract(address, abi, library.getSigner());
+        const nftContract = new ethers.Contract(address, abi, library.getSigner()); // MEMOIZE?
 
         if (category === 'Claimmable') {
           let newItem = { ...item, status: NFT_STATUS.NOT_DONATE.VALUE }
@@ -124,7 +124,7 @@ export function NFTContractProvider({ children }) {
     if (!isEmpty(nftsList)) {
       getNFTData();
     }
-  }, [nftsList, getNFTData])
+  }, [nftsList, getNFTData]) // actually fine with only getNFTData
 
   const claimNFT = useCallback(async (item) => {
     if (!account) {

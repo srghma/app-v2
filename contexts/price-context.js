@@ -3,6 +3,13 @@ import CoinGecko from 'coingecko-api'
 
 const ContractContext = createContext(null)
 
+// we use Contexts to prop to many children comp data and not calc for each child
+// it actually smart, will work even when data is being updated once N time
+
+// ALSO usePRice can be called sev times in same component
+
+// in reflex I can have event that fires only once OR many times?
+
 export function PriceProvider({ children }) {
   const [loading,setLoading] = useState(true);
   const [prices, setPrices] = useState({
@@ -32,7 +39,7 @@ export function PriceProvider({ children }) {
         SNOB: response['snowball-token']?.usd || 0,
         SNOB24HChange: response['snowball-token']?.usd_24h_change || 0,
       };
-      setPrices(prices);
+      setPrices(prices); // ERROR: different structure
       setLoading(false);
     };
     if(loading){

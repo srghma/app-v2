@@ -26,7 +26,7 @@ export function ContractProvider({ children }) {
   const [totalSnowcone, setTotalSnowcone] = useState(0);
   const { prices } = usePrices();
 
-  const isWrongNetwork = useMemo(() => chainId !== C_CHAIN_ID, [chainId])
+  const isWrongNetwork = useMemo(() => chainId !== C_CHAIN_ID, [chainId]) // should use
   const snowballContract = useMemo(() => library ? new ethers.Contract(CONTRACTS.SNOWBALL, SNOWBALL_ABI, provider) : null, [library,provider])
   const snowconeContract = useMemo(() => library ? new ethers.Contract(CONTRACTS.SNOWCONE, SNOWCONE_ABI, provider) : null, [library,provider])
   const gaugeProxyContract = useMemo(() => library ? new ethers.Contract(CONTRACTS.GAUGE_PROXYV2, GAUGE_PROXY_ABI, provider) : null, [library,provider])

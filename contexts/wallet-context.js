@@ -18,8 +18,8 @@ export function WalletProvider({ children }) {
       setActivatingConnector(undefined)
     }
   }, [activatingConnector, connector])
-
-  const triedEager = useEagerConnect();
+  // SAME AS IN web3-react example
+  const triedEager = useEagerConnect(); 
   useInactiveListener(!triedEager || !!activatingConnector)
 
   const onConnectWallet = (injected) => {

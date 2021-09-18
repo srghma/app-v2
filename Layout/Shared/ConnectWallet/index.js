@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ConnectWallet = () => {
   const classes = useStyles()
-  const { setIsWalletDialog } = useWallets()
+  const { setIsWalletDialog } = useWallets() // TODO how
   const { account, active, error, deactivate } = useWeb3React();
 
   const walletHandler = () => {

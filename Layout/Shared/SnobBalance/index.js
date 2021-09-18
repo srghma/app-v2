@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
 const SnobBalance = () => {
   const classes = useStyles()
   const { snowballBalance } = useContracts()
-  const { prices } = usePrices();
+  const { prices } = usePrices(); // TODO how
 
   const snowballPrice = useMemo(() => prices.SNOB * snowballBalance, [prices, snowballBalance]);
 
